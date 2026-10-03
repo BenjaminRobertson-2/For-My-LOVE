@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love ❤️</title>
+
+    <!-- Inclusion de Bootstrap -->
+    <link rel="stylesheet" href="bootstrap.min.css"> 
+    
+    <!-- Polices Google Fonts : Romance & Élégance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Fichier CSS personnalisé -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-dark bg-opacity-75 text-dark text-center min-vh-100 d-flex justify-content-center align-items-center py-4 px-3">
+
+  <!-- Carte centrale ajustée (Contrainte max-width & max-height) -->
+  <div class="card-romantic bg-light bg-opacity-90 p-4 p-md-5 rounded-5 shadow-lg border border-dark border-2 my-auto">
+    
+    <h1 class="font-romantic mt-2">
+      Hey HONEY 🤗 <br> 
+      I hope you're doing very well ! <br> 
+      I wanna let you know <br> 
+      how much I regret <br> 
+      when I make mistakes and <br> 
+      make you sad... 😥 <br> 
+      I am extremely grateful <br> 
+      for meeting you my love 🤗 !!!!
+    </h1>
+
+    <p class="lead-romantic fw-bold my-3">I LOVE YOU MY BABY 😍 ❤️❤️❤️!!!</p>
+
+    <!-- Conteneur des deux boutons -->
+    <div class="d-flex flex-row justify-content-center align-items-center gap-4 gap-md-5 my-3 flex-wrap">
+        
+        <!-- Premier Cœur (Fixe) -->
+        <a href="together.html" class="text-decoration-none">
+          <button class="heart-btn-3d" aria-label="Aimer en 3D">
+            <span><strong class="fw-bolder">i love u too !!!</strong></span>
+            <span class="heart-icon" aria-hidden="true"> 😍❤️ </span>
+        </button>
+      </a> 
+
+        <!-- Deuxième Cœur (Fuyant) -->
+        
+          <button id="runaway-heart" class="heart-btn-broken-3d" aria-label="Cœur brisé 3D">
+            <span><strong>i hate u 😥</strong></span>
+        </button>
+
+    </div>
+  
+  </div>
+
+  <script src="bootstrap.bundle.min.js"></script>
+
+  <script>
+    const heart = document.getElementById('runaway-heart');
+    let isEscaping = false;
+
+    function escapeCursor(clientX, clientY) {
+      const rect = heart.getBoundingClientRect();
+      const heartWidth = rect.width;
+      const heartHeight = rect.height;
+
+      const heartCenterX = rect.left + heartWidth / 2;
+      const heartCenterY = rect.top + heartHeight / 2;
+
+      const deltaX = clientX - heartCenterX;
+      const deltaY = clientY - heartCenterY;
+      const dist = Math.hypot(deltaX, deltaY);
+
+      if (dist < 150) {
+        if (!isEscaping) {
+          heart.style.position = 'fixed';
+          heart.style.left = `${rect.left}px`;
+          heart.style.top = `${rect.top}px`;
+          heart.style.margin = '0';
+          isEscaping = true;
+        }
+
+        const padding = 15;
+        const minX = padding;
+        const minY = padding;
+        const maxX = document.documentElement.clientWidth - heartWidth - padding;
+        const maxY = document.documentElement.clientHeight - heartHeight - padding;
+
+        const pushDistance = window.innerWidth < 576 ? 160 : 220;
+
+        const angle = Math.atan2(deltaY, deltaX);
+        let targetX = rect.left - Math.cos(angle) * pushDistance;
+        let targetY = rect.top - Math.sin(angle) * pushDistance;
+
+        const isBlockedX = targetX < minX || targetX > maxX;
+        const isBlockedY = targetY < minY || targetY > maxY;
+
+        if (isBlockedX || isBlockedY) {
+          const screenCenterX = document.documentElement.clientWidth / 2;
+          const screenCenterY = document.documentElement.clientHeight / 2;
+
+          const angleToCenter = Math.atan2(screenCenterY - heartCenterY, screenCenterX - heartCenterX);
+          const randomOffset = (Math.random() - 0.5) * 0.8;
+          const escapeAngle = angleToCenter + randomOffset;
+
+          targetX = rect.left + Math.cos(escapeAngle) * pushDistance;
+          targetY = rect.top + Math.sin(escapeAngle) * pushDistance;
+        }
+
+        targetX = Math.max(minX, Math.min(targetX, maxX));
+        targetY = Math.max(minY, Math.min(targetY, maxY));
+
+        heart.style.left = `${targetX}px`;
+        heart.style.top = `${targetY}px`;
+      }
+    }
+
+    document.addEventListener('mousemove', (e) => escapeCursor(e.clientX, e.clientY));
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        escapeCursor(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    heart.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 0) {
+        escapeCursor(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    });
+  </script>
+</body>
+</html>

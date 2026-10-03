@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Together</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #000;
+        position: relative;
+      }
+
+      /* Vidéo de fond floutée qui remplit tout */
+      .bg-video-blur {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        filter: blur(25px) brightness(0.6);
+        transform: scale(1.1); /* Évite les bords blancs du flou */
+        z-index: 1;
+      }
+
+      /* Vidéo principale nette au centre */
+      .main-video {
+        position: relative;
+        z-index: 2;
+        max-width: 100vw;
+        max-height: 100vh;
+        height: 100vh;
+        object-fit: contain;
+      }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center">
+
+    <!-- Vidéo d'arrière-plan pour meubler les côtés -->
+    <video class="rounded-4 bg-video-blur" autoplay loop muted playsinline src="VID_20260930_132610_147.mp4"></video>
+
+    <!-- Vidéo principale au premier plan -->
+    <video class="rounded-4 main-video shadow-lg" autoplay loop muted playsinline src="VID_20260930_132610_147.mp4"></video>
+
+    <script src="bootstrap.bundle.js"></script>
+</body>
+</html>
